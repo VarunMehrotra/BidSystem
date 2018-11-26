@@ -24,7 +24,7 @@
 				href="index.html" target="_blank">Home <span class="sr-only">(current)</span></a>
 			</li>
 			<li class="nav-item"><a class="nav-link"
-				href="profile-info.html" target="_blank">Profile Info</a></li>
+				href="profileInfo.jsp" target="_blank">Profile Info</a></li>
 			<li class="nav-item"><a class="nav-link"
 				href="order-summary.html" target="_blank">Orders Summary</a></li>
 			<li class="nav-item"><a class="nav-link" href="post-item.html"
@@ -41,7 +41,7 @@
 	<div class="col-md-7 order-md-1">
 		<br /> <br />
 		<h3 class="mb-3" align="center">Post Item</h3>
-		<form class="needs-validation" name="PostItem" action="PostItem"
+		<form class="needs-validation" name="PostItem" enctype="multipart/form-data" action="postItem"
 			method="post" novalidate>
 
 			<div class="mb-3">
@@ -66,14 +66,15 @@
 
 			<div class="row">
 				<div class="col-md-3 mb-3">
-					<label for="available-date">Date</label> <input type="date"
+					<label for="available-date">Date</label> 
+					<input type="date"
 						class="form-control" name="available-date"
-						placeholder="10/20/2018" required>
+						placeholder="2018-09-04" required>
 					<div class="invalid-feedback">Please enter date.</div>
 				</div>
 				<div class="col-md-3 mb-3">
 					<label for="available-time">Time</label> <input type="time"
-						class="form-control" name="available-time" placeholder="10:00 PM"
+						class="form-control" name="available-time" placeholder="10:00:00"
 						required>
 					<div class="invalid-feedback">Please enter time.</div>
 				</div>

@@ -1,9 +1,10 @@
 package com.bid.bean;
 
-import com.bid.controller.Date;
-import com.bid.controller.InputStream;
-import com.bid.controller.Part;
-import com.bid.controller.Time;
+import java.io.InputStream;
+import java.text.*;
+import java.util.*;
+import java.time.*;
+import javax.servlet.http.Part;
 
 public class ItemBean {
 
@@ -34,7 +35,7 @@ public class ItemBean {
 		price= "0";
 		date="";
 		time="";
-		part=null;
+		filePart=null;
 	
 	}
 	public void setItemName(String itemName) {
@@ -49,19 +50,19 @@ public class ItemBean {
 	public String getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 	public String getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	public String getTime() {
 		return time;
 	}
-	public void setTime(Time time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 	public Part getFilePart() {

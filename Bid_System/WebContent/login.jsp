@@ -17,16 +17,10 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="index.html" target="_blank">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="login.jsp">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="profile-info.html" target="_blank">Profile Info</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="order-summary.html" target="_blank">Orders Summary</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="post-item.html" target="_blank">Post Item</a>
+            <a class="nav-link" href="register.jsp" target="_blank">Register</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="contact-us.html" target="_blank">Contact Us</a>

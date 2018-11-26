@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Login</title>
+<title>Register</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
@@ -15,23 +15,15 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="index.html" target="_blank">Home <span class="sr-only">(current)</span></a>
+        <li class="nav-item active">
+            <a class="nav-link" href="login.jsp" target="_blank">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="profile-info.html" target="_blank">Profile Info</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="order-summary.html" target="_blank">Orders Summary</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="post-item.html" target="_blank">Post Item</a>
+            <a class="nav-link" href="register.jsp" target="_blank">Register</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="contact-us.html" target="_blank">Contact Us</a>
           </li>
-        </ul>
       </div>
     </nav>
   </header>
