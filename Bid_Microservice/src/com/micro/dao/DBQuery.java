@@ -1,5 +1,12 @@
 package com.micro.dao;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.sql.*;
+import java.util.*;
+
+import javax.servlet.http.Part;
+
+import java.text.SimpleDateFormat;  
 
 public class DBQuery {
 	
@@ -23,6 +30,38 @@ public class DBQuery {
 			
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	public static void insertItem(String user, String item, String desc, float price, String date, String time, String file) {
+		try {
+			byte[] decoded = Base64.getDecoder().decode(file);
+			InputStream inputStream = new ByteArrayInputStream(decoded);
+			String sql = "insert into item (username, itemTitle, itemDesc, biddingPrice, auctionDate, auctionTime, file, marker) values (?, ?, ?, ?, ?, ?, ?, ?)"; 
+			
+			Connection connection = DBConnection.getConnection();
+			PreparedStatement preparedStmt = connection.prepareStatement(sql);
+			
+			preparedStmt.setString(1, user);
+			preparedStmt.setString(2, item);
+			preparedStmt.setString(3, desc);
+			preparedStmt.setFloat(4, price);
+			preparedStmt.setDate(5, java.sql.Date.valueOf(date));
+			preparedStmt.setTime(6, java.sql.Time.valueOf(time));
+			preparedStmt.setBlob(7, inputStream);
+			preparedStmt.setBoolean(8, false);
+			
+			System.out.println("user : " + user);
+			System.out.println("item : " + item);
+			System.out.println("desc : "+ desc);
+			System.out.println("price : " + price);
+			System.out.println("date : " + java.sql.Date.valueOf(date));
+			System.out.println("time : " + java.sql.Time.valueOf(time));
+
+			preparedStmt.execute();
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();

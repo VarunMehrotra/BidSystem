@@ -14,6 +14,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.PathParam;
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 
 @Path("/postItem")
 public class postItemMicro {
@@ -22,20 +24,20 @@ public class postItemMicro {
 	@Consumes("application/x-www-form-urlencoded")
     @Produces(MediaType.TEXT_PLAIN)
 	
-	public Response checkUsername(MultivaluedMap<String, ItemBean> formParam) {
+	public Response checkUsername(MultivaluedMap<String, String> formParam) {
 		boolean response = false;
 		
-		ItemBean itemBean = formParam.getFirst("bean");
-		String username = itemBean.getUsername();
-		String itemName = itemBean.getItemName();
-		String description = itemBean.getDescription();
-		float price =  Float.parseFloat(itemBean.getPrice());
-		Date date = itemBean.getDate();
-		Time time = itemBean.getTime();
-		Part filePart = itemBean.getFilePart();
+		String file = formParam.getFirst("file");
+		String itemName = String.valueOf(formParam.getFirst("item"));
+		String description = String.valueOf(formParam.getFirst("description"));
+		float price = Float.parseFloat(String.valueOf(formParam.getFirst("price")));
+		String date = String.valueOf(formParam.getFirst("date"));
+		String time = String.valueOf(formParam.getFirst("time"));
+		String user = String.valueOf(formParam.getFirst("user"));
+		
 		
 		try {
-		   DBQuery.insertResult("insert into item values('" + username + "','" + itemName + "','" + description + "','" + price + "','" + date + "','" + time + "','" + filePart + "','false'" + ")");
+			DBQuery.insertItem(user, itemName, description, price, date, time, file);
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
