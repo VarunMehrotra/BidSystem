@@ -9,16 +9,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
-
-import com.bid.controller.Date;
-import com.bid.controller.Part;
-import com.bid.controller.Time;
+import java.util.*;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
-
 import javax.ws.rs.PathParam;
+
 
 @Path("/postItemServices")
 public class postItemService {
@@ -26,7 +23,7 @@ public class postItemService {
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response isValidUser(MultivaluedMap<String, ItemBean> formParam) {
+	public Response isValidUser(MultivaluedMap<String, String> formParam) {
 		boolean response = false;
 		boolean status = false;
 		ClientResponse restResponse = null;
@@ -36,9 +33,21 @@ public class postItemService {
 			Client client = Client.create();
 			WebResource webResource = client.resource("http://localhost:8082/Bid_Microservice/postItem/item");
 			
-			ItemBean bean = formParam.getFirst("bean");
-						
-			fp.add("bean",bean);
+			String file = formParam.getFirst("file");
+			String itemName = formParam.getFirst("item");
+			String description = formParam.getFirst("description");
+			String price = formParam.getFirst("price");
+			String date = formParam.getFirst("date");
+			String time = formParam.getFirst("time");
+			String user = formParam.getFirst("user");
+			
+			fp.add("file", file);
+			fp.add("item", itemName);
+			fp.add("description", description);
+			fp.add("price", price);
+			fp.add("date", date);
+			fp.add("time", time);
+			fp.add("user", user);
 			
 			restResponse = webResource
 					.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
