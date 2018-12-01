@@ -4,37 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Profile Information</title>
+<title>Bid Page</title>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<!-- <script type="text/javascript"
-		src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			alert("Pass 11");
-			
-			$.ajax({
-				url : "FetchProfileServlet343",
-				type : "GET",
-				data: {value:option_value},
-				success : function(data) {
-					alert("Pass");
-					console.log(data);
-					/*var json = jQuery.parseJSON(data);
-					$('#name').html = data.name;
-					$('#phone').html = data.phone;
-					$('#address').html = data.address;
-					$('#email').html = data.email;
-					$('#username').html = data.USERNAME;*/
-				},
-				error : function(data) {
-					alert("Fail");
-				}
-			});
-		});
-	</script> -->
 </head>
 <body>
 	<header> <nav
@@ -62,32 +36,41 @@
 	<br />
 	<br />
 	<br />
-	<div class="col-md-8 order-md-1">
-		<h3 align="center">Profile Information</h3>
-
-		<form action="UpdateProfileServlet" method="post">
-			<div class="container" class="mb-3">
-				<hr>
-
-				<label for="name"><b>Name</b></label> <input type="text"
-					class="form-control" name="name"  id="text_name" required> <br /> 
-					<label
-					for="phone"><b>Phone</b></label> 
-					<input type="text"
-					class="form-control" name="phone" id="text_phone" required> <br /> <label
-					for="address"><b>Address</b></label> 
-					<input type="text"
-					class="form-control" name="address" id="text_address" required> <br /> <label
-					for="email"><b>Email</b></label> 
-					<input type="text"
-					class="form-control" name="email" id="text_email" required> <br /> <label
-					for="username"><b>Username</b></label> <input type="text"
-					class="form-control" id="text_username" name="username" required> <br /> <br />
-				<div class="mb-4">
-					<button type="reset" class="cancelbtn">Cancel</button>
-					<button type="submit" class="signupbtn">Save</button>
+	<div>
+		<h3 align="center">Bid Information</h3>
+		<br />
+		<br />
+		<form action="PostBidServlet" method="post">
+			<div class="row col-md-12">
+				<div class="column col-md-4">				
+				<label for="itemTitle"><b>Item Title</b></label> 
+				<input type="text"
+					name="text_itemTitle"  id="text_itemTitle" required> 
 				</div>
-			</div>
+					<br /> 
+
+				<div class="column col-md-4">
+
+					<img
+					 name="text_imageFile" id="text_imageFile" style="width:400" height="200" src="Not Available"> 
+				</div>
+					<br /> 
+				<div class="column col-md-4">
+					<label
+					for="bidValue"><b>Bid Value</b></label> 
+
+					<input type="text"
+					 name="text_bidValue" id="text_bidValue" required> 
+				</div>
+				</div>
+					<br /> 
+
+					<br /> 
+					<br />
+				<div>
+					<button type="reset" class="cancelbtn">Cancel</button>
+					<button type="submit" class="signupbtn">Submit Bid</button>
+				</div>
 		</form>
 	</div>
 	<script type="text/javascript"
@@ -100,14 +83,12 @@
 				var jsonArray = eval ("(" + data + ")");
 				var jsonObject = jsonArray[0];
 								
-				document.getElementById("text_name").value = jsonObject.name;
-				document.getElementById("text_phone").value = jsonObject.phone;
-				document.getElementById("text_address").value = jsonObject.address;
-				document.getElementById("text_email").value = jsonObject.email;
-				document.getElementById("text_username").value = jsonObject.USERNAME;
+				document.getElementById("text_itemTitle").value = jsonObject.itemTitle;
+				document.getElementById("text_imageFile").value = jsonObject.file;
+				document.getElementById("text_bidValue").value = jsonObject.biddingPrice;
 			}
 		}
-		xhr.open('GET', 'FetchProfileServlet', true);
+		xhr.open('GET', 'FetchBidServlet', true);
 		xhr.send(null);
 	</script>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

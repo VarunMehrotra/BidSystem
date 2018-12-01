@@ -9,6 +9,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
 </head>
 <body>
 	<header> <nav
@@ -67,15 +68,17 @@
 			<div class="row">
 				<div class="col-md-3 mb-3">
 					<label for="available-date">Date</label> 
-					<input type="date"
-						class="form-control" name="available-date"
-						placeholder="2018-09-04" required>
+					<input type="text"
+						class="form-control" name="available-date" id="available-date"
+ 						placeholder="2018-09-04" required>
 					<div class="invalid-feedback">Please enter date.</div>
 				</div>
 				<div class="col-md-3 mb-3">
-					<label for="available-time">Time</label> <input type="time"
-						class="form-control" name="available-time" placeholder="10:00:00"
-						required>
+					<label for="available-time">Time</label> 
+					<!--   <input type="text"
+						class="form-control" name="available-time" id="available-time" placeholder="10:00:00"
+						required>-->
+						<select id="available-time"></select>
 					<div class="invalid-feedback">Please enter time.</div>
 				</div>
 			</div>
@@ -94,9 +97,33 @@
 	</div>
 	</form>
 	</div>
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+	<script>
+		$(document).ready(function() {
+			$("#available-date").datepicker({
+			    onSelect: function(date) {
+			    	var params = 'date=' + date;
+			    	var xhr = new XMLHttpRequest();
+					xhr.onreadystatechange = function() {
+						if (xhr.readyState == 4) {
+							var data = xhr.responseText;
+					    		var arr = data.split(",");
+					    	
+					    		var text;
+					    		var i;
+					    		for(i=0; i<arr.length; i++){ 
+					    			$("#available-time").append('<option value ="' + arr[i] + '">' + arr[i] + '</option>');
+					    		}	    	
+						}
+					}
+					xhr.open('POST', 'FetchSlotsServlet', true);
+					xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					xhr.send(params);
+			    }
+			});
+		});
+	</script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>

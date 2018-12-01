@@ -8,9 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
-
 import org.json.JSONArray;
-
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -19,14 +17,14 @@ import java.io.PrintWriter;
 /**
  * Servlet implementation class FetchProfileServlet
  */
-@WebServlet("/FetchProfileServlet")
-public class FetchProfileServlet extends HttpServlet {
+@WebServlet("/FetchBidServlet")
+public class FetchBidServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public FetchProfileServlet() {
+	public FetchBidServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -37,15 +35,15 @@ public class FetchProfileServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		Boolean status = false;
 		JSONArray profileArray = null;
 		PrintWriter out = null;
 		
 		try {
 			HttpSession session = request.getSession();
-			String username = String.valueOf(session.getAttribute("USER"));
 			Client client = Client.create();
-			WebResource webResource = client.resource("http://localhost:8081/Bid_WebService/fetchProfile/userProfile/" + username);
+			System.out.println("In Fetch Bid Servlet");
+			
+			WebResource webResource = client.resource("http://localhost:8081/Bid_WebService/fetchCurrentBid/fetchBid/");
 			ClientResponse restResponse = webResource
 					.type("application/json")
 					.get(ClientResponse.class);

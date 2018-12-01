@@ -8,25 +8,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
-
 import org.json.JSONArray;
-
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import java.io.PrintWriter;
+import java.util.*;
+import java.text.SimpleDateFormat;
 
 /**
  * Servlet implementation class FetchProfileServlet
  */
-@WebServlet("/FetchProfileServlet")
-public class FetchProfileServlet extends HttpServlet {
+@WebServlet("/FetchSlotsServlet")
+public class FetchSlotsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public FetchProfileServlet() {
+	public FetchSlotsServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -34,28 +34,32 @@ public class FetchProfileServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		Boolean status = false;
-		JSONArray profileArray = null;
 		PrintWriter out = null;
 		
 		try {
 			HttpSession session = request.getSession();
-			String username = String.valueOf(session.getAttribute("USER"));
 			Client client = Client.create();
-			WebResource webResource = client.resource("http://localhost:8081/Bid_WebService/fetchProfile/userProfile/" + username);
+			String date = request.getParameter("date");
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+			
+			System.out.println("Testing : " + sdf.format(new SimpleDateFormat("mm/dd/yyyy").parse(date)));
+			
+			WebResource webResource = client.resource("http://localhost:8081/Bid_WebService/fetchAvailableSlots/fetchSlots/" + sdf.format(new SimpleDateFormat("mm/dd/yyyy").parse(date)));
 			ClientResponse restResponse = webResource
-					.type("application/json")
-					.get(ClientResponse.class);
-			profileArray = new JSONArray(restResponse.getEntity(String.class));
+					.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+					.post(ClientResponse.class);
+			
 			if (restResponse.getStatus() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : " + restResponse.getStatus());
 			}
 			out = response.getWriter();
 			 
-			out.write(profileArray.toString());
+			out.write(restResponse.getEntity(String.class));
 			out.flush();
 
 		} catch (Exception e) {
@@ -66,9 +70,9 @@ public class FetchProfileServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		//doGet(request, response);
 	}
 
 }

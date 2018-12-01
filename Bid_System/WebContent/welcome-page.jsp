@@ -26,9 +26,9 @@
 				href="welcome-page.jsp" target="_blank">Home <span class="sr-only">(current)</span></a>
 			</li>
 			<li class="nav-item"><a class="nav-link"
-				href="profileInfo.jsp" target="_blank">Profile Info</a></li>
+				href="profileInfo.jsp">Profile Info</a></li>
 			<li class="nav-item"><a class="nav-link"
-				href="order-summary.html" target="_blank">Orders Summary</a></li>
+				href="order-summary.html">Orders Summary</a></li>
 			<li class="nav-item"><a class="nav-link" href="postItem.jsp"
 				target="_blank">Post Item</a></li>
 			<li class="nav-item"><a class="nav-link" href="contact-us.html"
