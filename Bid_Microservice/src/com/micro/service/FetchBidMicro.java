@@ -38,13 +38,15 @@ public class FetchBidMicro {
 	        String time = minute[0] + ":" + ((min/15) * 15) + ":00";
 	        
 	        System.out.println(time);
-			ResultSet rs = DBQuery.getResult("select itemID, itemTitle, biddingPrice, file from item where auctionTime = '" + time + "' and marker = 'false'");
+			ResultSet rs = DBQuery.getResult("select itemID, itemTitle, itemDesc, biddingPrice, file from item where auctionTime = '" + time + "' and marker = 'false'");
 			
 			while(rs.next()) {	
 				
 				ResultSet result = DBQuery.getResult("select biddingPrice from bid where itemID = '" + rs.getString("itemTitle") + "'");
 				
 				obj.put("itemTitle", rs.getString("itemTitle"));
+				obj.put("itemDesc", rs.getString("itemDesc"));
+				obj.put("initialBid", rs.getString("biddingPrice"));
 				
 				if (!result.next() ) {
 					obj.put("biddingPrice", rs.getString("biddingPrice"));
