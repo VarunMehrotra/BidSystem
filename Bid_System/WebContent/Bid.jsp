@@ -38,39 +38,38 @@
 	<br />
 	<div>
 		<h3 align="center">Bid Information</h3>
-		<br />
-		<br />
-		<form action="PostBidServlet" method="post">
+		<br /> <br />
+		<form action="postBidServlet" method="post">
 			<div class="row col-md-12">
-				<div class="column col-md-4">				
-				<label for="itemTitle"><b>Item Title</b></label> 
-				<input type="text"
-					name="text_itemTitle"  id="text_itemTitle" required> 
+				<div class="column col-md-3">
+					<label for="itemTitle"><b>Item Title</b></label> <input type="text"
+						name="text_itemTitle" id="text_itemTitle" required readonly>
 				</div>
-					<br /> 
+				<br />
 
-				<div class="column col-md-4">
+				<div class="column col-md-3">
 
-					<img
-					 name="text_imageFile" id="text_imageFile" style="width:400" height="200" src="Not Available"> 
+					<label for="itemDesc"><b>Item Desc</b></label> <input type="text"
+						name="text_itemdesc" id="text_itemdesc" required readonly>
 				</div>
-					<br /> 
-				<div class="column col-md-4">
-					<label
-					for="bidValue"><b>Bid Value</b></label> 
-
-					<input type="text"
-					 name="text_bidValue" id="text_bidValue" required> 
+				<br />
+				<div class="column col-md-3">
+					<label for="itemPrice"><b>Initial Bid</b></label> <input type="text"
+						name="text_itemPrice" id="text_itemPrice" required readonly>
 				</div>
+				<br />
+				
+				<div class="column col-md-3">
+					<label for="bidValue"><b>Bid Value</b></label> <input type="text"
+						name="text_bidValue" id="text_bidValue" required>
 				</div>
-					<br /> 
-
-					<br /> 
-					<br />
-				<div>
-					<button type="reset" class="cancelbtn">Cancel</button>
-					<button type="submit" class="signupbtn">Submit Bid</button>
-				</div>
+				
+			</div>
+			<br /> <br /> <br />
+			<div>
+				<button type="reset" class="cancelbtn">Cancel</button>
+				<button type="submit" class="signupbtn">Submit Bid</button>
+			</div>
 		</form>
 	</div>
 	<script type="text/javascript"
@@ -84,7 +83,8 @@
 				var jsonObject = jsonArray[0];
 								
 				document.getElementById("text_itemTitle").value = jsonObject.itemTitle;
-				document.getElementById("text_imageFile").value = jsonObject.file;
+				document.getElementById("text_itemdesc").value = jsonObject.itemDesc;
+				document.getElementById("text_itemPrice").value = jsonObject.initialBid;
 				document.getElementById("text_bidValue").value = jsonObject.biddingPrice;
 			}
 		}

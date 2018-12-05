@@ -78,7 +78,7 @@
 					<!--   <input type="text"
 						class="form-control" name="available-time" id="available-time" placeholder="10:00:00"
 						required>-->
-						<select id="available-time"></select>
+						<select id="available-time" name="available-time"></select>
 					<div class="invalid-feedback">Please enter time.</div>
 				</div>
 			</div>
