@@ -33,7 +33,7 @@ public class FetchProfileService {
 		try {
 
 			Client client = Client.create();
-			WebResource webResource = client.resource("http://localhost:8082/Bid_Microservice/fetchUserProfile/fetchProfile/" + username);
+			WebResource webResource = client.resource("https://localhost:8445/Bid_Microservice/fetchUserProfile/fetchProfile/" + username);
 			
 			restResponse = webResource
 					.accept("application/json")

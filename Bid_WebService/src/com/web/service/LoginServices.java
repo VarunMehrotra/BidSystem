@@ -31,13 +31,13 @@ public class LoginServices {
 		try {
 
 			Client client = Client.create();
-			WebResource webResource = client.resource("http://localhost:8082/Bid_Microservice/checkUser/lookup");
+			WebResource webResource = client.resource("https://localhost:8445/Bid_Microservice/checkUser/lookup");
 
 			String user = formParam.getFirst("username");
 			
 			fp.add("username", user);
 			
-
+			
 			restResponse = webResource
 					.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
 					.post(ClientResponse.class, fp);
@@ -58,10 +58,14 @@ public class LoginServices {
 		else {
 			try {
 				Client client = Client.create();
-				WebResource webResource = client.resource("http://localhost:8082/Bid_Microservice/loginmicro/checkDb");
+				WebResource webResource = client.resource("https://localhost:8445/Bid_Microservice/loginmicro/checkDb");
 				
 				String pass = formParam.getFirst("password");
+				String isAdmin = formParam.getFirst("isAdmin");
+				
 				fp.add("password", pass);
+				fp.add("isAdmin", isAdmin);
+				
 				restResponse = webResource
 						.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
 						.post(ClientResponse.class, fp);

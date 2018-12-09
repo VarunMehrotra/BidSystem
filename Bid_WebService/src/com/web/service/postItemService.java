@@ -31,7 +31,7 @@ public class postItemService {
 		MultivaluedMap fp = new MultivaluedMapImpl();
 		try {
 			Client client = Client.create();
-			WebResource webResource = client.resource("http://localhost:8082/Bid_Microservice/postItem/item");
+			WebResource webResource = client.resource("https://localhost:8445/Bid_Microservice/postItem/item");
 			
 			String file = formParam.getFirst("file");
 			String itemName = formParam.getFirst("item");

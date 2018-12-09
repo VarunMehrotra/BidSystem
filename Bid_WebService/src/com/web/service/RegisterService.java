@@ -31,7 +31,7 @@ public class RegisterService {
 		try {
 
 			Client client = Client.create();
-			WebResource webResource = client.resource("http://localhost:8082/Bid_Microservice/checkUser/lookup");
+			WebResource webResource = client.resource("https://localhost:8445/Bid_Microservice/checkUser/lookup");
 
 			String user = formParam.getFirst("username");
 

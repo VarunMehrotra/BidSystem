@@ -29,9 +29,9 @@ public class FetchBidService {
 		ClientResponse restResponse = null;
 		
 		try {
-
+			
 			Client client = Client.create();
-			WebResource webResource = client.resource("http://localhost:8082/Bid_Microservice/fetchCurrentBid/fetchBid");
+			WebResource webResource = client.resource("https://localhost:8445/Bid_Microservice/fetchCurrentBid/fetchBid");
 			
 			restResponse = webResource
 					.accept("application/json")
@@ -41,6 +41,7 @@ public class FetchBidService {
 			if (restResponse.getStatus() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : " + restResponse.getStatus());
 			}
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
