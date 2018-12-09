@@ -25,7 +25,6 @@ public class FetchSlotMicro {
 	public Response fetchSlot(@PathParam("date") String date){
 		String str = "";
 		try {
-			System.out.println(date);
 			ResultSet rs = DBQuery.getResult("select slots from auctionDuration where auctionDate='" + date + "'");
 			
 			while(rs.next()) {	

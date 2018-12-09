@@ -16,48 +16,64 @@ import org.json.JSONObject;
 import java.util.*;
 import com.micro.dao.DBQuery;
 import org.json.*;
+
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 @Path("/fetchCurrentBid")
 public class FetchBidMicro {
 	@Path("/fetchBid")
-    @Produces("application/json")
+	@Produces("application/json")
 	@GET
 	public Response fetchProfile() throws JSONException{
 		JSONArray profileArray = new JSONArray();
 		JSONObject obj = new JSONObject();
-		
+
 		try {
 			Calendar cal = Calendar.getInstance();
-	        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-	        String currentTime = sdf.format(cal.getTime());
-	        String[] minute = currentTime.split(":");
-	        int min = Integer.parseInt(minute[1]);
-	        
-	        String time = minute[0] + ":" + ((min/15) * 15) + ":00";
-	        
-	        System.out.println(time);
-			ResultSet rs = DBQuery.getResult("select itemID, itemTitle, itemDesc, biddingPrice, file from item where auctionTime = '" + time + "' and marker = 'false'");
-			
-			while(rs.next()) {	
-				
-				ResultSet result = DBQuery.getResult("select biddingPrice from bid where itemID = '" + rs.getString("itemTitle") + "'");
-				
-				obj.put("itemTitle", rs.getString("itemTitle"));
-				obj.put("itemDesc", rs.getString("itemDesc"));
-				obj.put("initialBid", rs.getString("biddingPrice"));
-				
-				if (!result.next() ) {
-					obj.put("biddingPrice", rs.getString("biddingPrice"));
-				} 
-				else {
-					while(result.next()) {
-						obj.put("biddingPrice", result.getString("biddingPrice"));
-					}
-				}
-				obj.put("file", rs.getString("file"));
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+			String currentTime = sdf.format(cal.getTime());
+			String[] minute = currentTime.split(":");
+			int min = (Integer.parseInt(minute[1])/15)*15;
+			String time = "";
+
+			if(min == 0) {
+				time = minute[0] + ":00:00";
 			}
+			else {
+				time = minute[0] + ":" + min + ":00";
+			}
+
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = new Date();
+						
+			ResultSet rs = DBQuery.getResult("select itemID, itemTitle, itemDesc, biddingPrice, file from item where auctionTime = '" + time + "' and marker = '0' and auctionDate = '" + dateFormat.format(date) + "'");
+
+			if (rs.next()) {
+				rs.beforeFirst();
+
+				while(rs.next()) {	
+
+					ResultSet result = DBQuery.getResult("select biddingPrice from bidresult where itemID = '" + rs.getString("itemID") + "'");
+
+					obj.put("itemTitle", rs.getString("itemTitle"));
+					obj.put("itemDesc", rs.getString("itemDesc"));
+					obj.put("initialBid", rs.getString("biddingPrice"));
+
+					if (result.next()) {
+						result.beforeFirst();
+						
+						while(result.next()) {
+							obj.put("biddingPrice", result.getString("biddingPrice"));
+						}
+					} 
+					else {
+						obj.put("biddingPrice", rs.getString("biddingPrice"));
+					}
+					obj.put("file", rs.getString("file"));
+				}
+			}
+
 			profileArray.put(obj);
 		}
 		catch(Exception ex) {

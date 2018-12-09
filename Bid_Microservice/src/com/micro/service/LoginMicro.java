@@ -24,9 +24,16 @@ public class LoginMicro {
 		boolean response = false;
 		String user = formParam.getFirst("username");
 		String pass = formParam.getFirst("password");
+		String isAdmin = formParam.getFirst("isAdmin");
+		ResultSet rs = null;
 		
 		try {
-			ResultSet rs = DBQuery.getResult("select password from access where username='" + user + "'");
+			if(isAdmin.equals("true")) {
+				rs = DBQuery.getResult("select password from access where usertype = 'admin' and username='" + user + "'");
+			}
+			else {
+				rs = DBQuery.getResult("select password from access where usertype = 'normal' and username='" + user + "'");
+			}	
 			String p = "";
 			
 			while(rs.next()) {

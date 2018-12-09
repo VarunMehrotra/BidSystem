@@ -26,37 +26,36 @@ public class BidConsumerMicro {
 	@Consumes("application/x-www-form-urlencoded")
 	public void bidConsumer(String str) {
 		try {
-			JSONObject json = new JSONObject(str);
-
+			JSONObject jsonArray = new JSONObject(str);
+			JSONObject json = new JSONObject(jsonArray.getString("message"));
+			
 			String username = json.getString("username");
 			String newBidValue = json.getString("newBidValue");
 			String itemName = json.getString("itemName");
-
-			System.out.println("1 :    " + username + " " + newBidValue + " " + itemName);
+			String itemID = "";
+			float biddingPrice = 0;
 
 			ResultSet rs = DBQuery.getResult("select itemID from item where itemTitle = '" + itemName + "'");
-			String itemID = "";
 
 			while(rs.next()) {	
 				itemID = rs.getString("itemID");
-			}
-
+			}			
 			DBQuery.insertBid(username, Integer.parseInt(itemID), Float.parseFloat(newBidValue));
-
-			ResultSet result = DBQuery.getResult("select biddingPrice from bidresult where itemID = '" + Integer.parseInt(itemID) + "'");
-			float biddingPrice = 0;
-
-			if (!result.next() ) {
-				DBQuery.insertResult("insert into bidresult values ('" + username + "','" + Integer.parseInt(itemID) + "','" + Float.parseFloat(newBidValue) + "')");
-			} 
-			else {
+			
+			ResultSet result = DBQuery.getResult("select biddingPrice from bidresult where itemID = '" + itemID + "'");
+			
+			if (result.first()) {
+				result.beforeFirst();
 				while(result.next()) {	
-					biddingPrice = result.getFloat("biddingPrice");
+					biddingPrice = Float.parseFloat(result.getString("biddingPrice"));
 				}
-
+				
 				if(biddingPrice < Float.parseFloat(newBidValue)) {
 					DBQuery.insertResult("update bidresult set biddingPrice = '" + Float.parseFloat(newBidValue) + "' where itemID = '" + Integer.parseInt(itemID) + "'");
 				}
+			} 
+			else {
+				DBQuery.insertResult("insert into bidresult values ('" + username + "','" + Integer.parseInt(itemID) + "','" + Float.parseFloat(newBidValue) + "')");
 			}
 		}
 		catch(Exception ex) {
