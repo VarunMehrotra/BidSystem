@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Login</title>
+<title>Admin Access</title>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css">
 <link rel="stylesheet"
@@ -35,30 +35,29 @@
 	<br />
 	<br />
 	<div class="col-md-8 order-md-1">
-		<h3 align="center">Login</h3>
-		<form name="loginForm" method="post" action="LoginServlet">
+		<h3 align="center">Admin Functionality</h3>
+		<form name="adminForm" method="post" action="AdminServlet">
 
-			<div class="mb-3">
-				<label for="user">User Name</label> <input type="text"
-					class="form-control" name="username" id="username" />
-			</div>
-
-			<div class="mb-3">
-				<label for="pass">Password</label> <input type="password"
-					class="form-control" name="password" id="password" />
-			</div>
-			<div>
-			<div class="mb-3" style="float:left">
-				<label for="admin">Admin User</label> <input type="checkbox"
-					name="adminUse" id="adminUse" value="true">
-			</div>
-			
-			<div class="mb-3" style="float:right">
-			<a href="forgotPassword.jsp">Forgot Password</a>
-			</div>
-			</div>
 			<br />
 			<br />
+			<h5>Please select the date and time below :-</h5>
+			<br />
+				<div class="col-md-3 mb-3">
+					<label for="available-date">Date</label> 
+					<input type="text"
+						class="form-control" name="available-date" id="available-date"
+						placeholder="2018-09-04" required>
+					<div class="invalid-feedback">Please enter date.</div>
+				</div>
+				<div class="col-md-3 mb-3">
+					<label for="start-time">Start Time</label>
+					<input type="text" class="form-control" id="start-time" name="start-time" placeholder="08:00:00" required>
+				</div>
+				<div class="col-md-3 mb-3">
+					<label for="end-time">End Time</label>
+					<input type="text" class="form-control" id="end-time" name="end-time" placeholder="18:00:00" required>
+				</div>
+
 			<hr class="mb-4">
 			<br />
 			<button class="btn btn-primary btn-lg" type="reset">Reset</button>

@@ -61,7 +61,7 @@ public class RegisterServlet extends HttpServlet {
 		try {
 			 
 			Client client = Client.create();
-			WebResource webResource = client.resource("http://localhost:8081/Bid_WebService/registrationServices/registerUser");
+			WebResource webResource = client.resource("https://localhost:8444/Bid_WebService/registrationServices/registerUser");
 			MultivaluedMap formData = new MultivaluedMapImpl();
 			formData.add("username", username);
 			formData.add("password", password);

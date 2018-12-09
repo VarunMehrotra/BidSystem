@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Login</title>
+<title>Password Reset</title>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css">
 <link rel="stylesheet"
@@ -35,28 +35,18 @@
 	<br />
 	<br />
 	<div class="col-md-8 order-md-1">
-		<h3 align="center">Login</h3>
-		<form name="loginForm" method="post" action="LoginServlet">
+		<h3 align="center">Password Reset</h3>
+		<br />
+		<br />
+		<h5>Please enter e-mail to reset password :-</h5>
+		<br />
+		<form method="post" action="SendEmailServlet">
 
 			<div class="mb-3">
-				<label for="user">User Name</label> <input type="text"
-					class="form-control" name="username" id="username" />
+				<label for="email">Email</label> <input type="email"
+					class="form-control" name="email" id="email" />
 			</div>
 
-			<div class="mb-3">
-				<label for="pass">Password</label> <input type="password"
-					class="form-control" name="password" id="password" />
-			</div>
-			<div>
-			<div class="mb-3" style="float:left">
-				<label for="admin">Admin User</label> <input type="checkbox"
-					name="adminUse" id="adminUse" value="true">
-			</div>
-			
-			<div class="mb-3" style="float:right">
-			<a href="forgotPassword.jsp">Forgot Password</a>
-			</div>
-			</div>
 			<br />
 			<br />
 			<hr class="mb-4">

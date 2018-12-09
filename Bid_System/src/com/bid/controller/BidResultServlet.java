@@ -17,16 +17,16 @@ import com.sun.jersey.api.client.WebResource;
 import java.io.PrintWriter;
 
 /**
- * Servlet implementation class FetchProfileServlet
+ * Servlet implementation class BidResultServlet
  */
-@WebServlet("/FetchBidServlet")
-public class FetchBidServlet extends HttpServlet {
+@WebServlet("/BidResultServlet")
+public class BidResultServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public FetchBidServlet() {
+	public BidResultServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -36,22 +36,22 @@ public class FetchBidServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		JSONArray profileArray = null;
 		PrintWriter out = null;
 		
 		try {
 			Client client = Client.create();
 			
-			WebResource webResource = client.resource("https://localhost:8444/Bid_WebService/fetchCurrentBid/fetchBid");
+			WebResource webResource = client.resource("https://localhost:8445/Bid_Microservice/fetchBidSummary/fetchSummary");
 			ClientResponse restResponse = webResource
 					.type("application/json")
 					.get(ClientResponse.class);
+			
 			profileArray = new JSONArray(restResponse.getEntity(String.class));
+			
 			if (restResponse.getStatus() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : " + restResponse.getStatus());
 			}
-						
 			out = response.getWriter();
 			 
 			out.write(profileArray.toString());

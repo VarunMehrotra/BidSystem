@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
+
 import org.json.JSONArray;
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -19,14 +21,14 @@ import java.io.PrintWriter;
 /**
  * Servlet implementation class FetchProfileServlet
  */
-@WebServlet("/FetchBidServlet")
-public class FetchBidServlet extends HttpServlet {
+@WebServlet("/FetchMyItemsServlet")
+public class FetchMyItemsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public FetchBidServlet() {
+	public FetchMyItemsServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -37,29 +39,35 @@ public class FetchBidServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		Boolean status = false;
 		JSONArray profileArray = null;
 		PrintWriter out = null;
-		
+
+		HttpSession session = request.getSession(false);		
 		try {
+			String username = String.valueOf(session.getAttribute("USER"));
 			Client client = Client.create();
-			
-			WebResource webResource = client.resource("https://localhost:8444/Bid_WebService/fetchCurrentBid/fetchBid");
+
+			System.out.println("USER : " + username + " " + session + " " + request.isRequestedSessionIdValid());
+
+			WebResource webResource = client.resource("https://localhost:8445/Bid_Microservice/fetchMyItem/fetchItem/" + username);
 			ClientResponse restResponse = webResource
 					.type("application/json")
 					.get(ClientResponse.class);
 			profileArray = new JSONArray(restResponse.getEntity(String.class));
+
 			if (restResponse.getStatus() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : " + restResponse.getStatus());
 			}
-						
 			out = response.getWriter();
-			 
+
 			out.write(profileArray.toString());
 			out.flush();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	/**

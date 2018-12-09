@@ -37,27 +37,7 @@
 	</script> -->
 </head>
 <body>
-	<header> <nav
-		class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-	<button class="navbar-toggler" type="button" data-toggle="collapse"
-		data-target="#navbarCollapse" aria-controls="navbarCollapse"
-		aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<div class="collapse navbar-collapse" id="navbarCollapse">
-		<li class="nav-item active"><a class="nav-link"
-			href="welcome-page.jsp" target="_blank">Home <span
-				class="sr-only">(current)</span></a></li>
-		<li class="nav-item"><a class="nav-link" href="profileInfo.jsp"
-			target="_blank">Profile Info</a></li>
-		<li class="nav-item"><a class="nav-link"
-			href="order-summary.html" target="_blank">Orders Summary</a></li>
-		<li class="nav-item"><a class="nav-link" href="postItem.jsp"
-			target="_blank">Post Item</a></li>
-		<li class="nav-item"><a class="nav-link" href="contact-us.html"
-			target="_blank">Contact Us</a></li>
-	</div>
-	</nav> </header>
+	<%@ include file='header.jsp' %>
 	<br />
 	<br />
 	<br />
@@ -91,7 +71,7 @@
 		</form>
 	</div>
 	<script type="text/javascript"
-		src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
 		var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function() {

@@ -36,14 +36,14 @@ import javax.ws.rs.core.MultivaluedMap;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/postBidServlet")
-public class PostBidServlet extends HttpServlet {
+@WebServlet("/InvalidateSessionServlet")
+public class InvalidateSessionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public PostBidServlet() {
+	public InvalidateSessionServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -51,34 +51,20 @@ public class PostBidServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		
-		HttpSession session = request.getSession();
-		
-		String itemName = request.getParameter("text_itemTitle");
-		String newBidValue = request.getParameter("text_bidValue");
-		
-		String username = String.valueOf(session.getAttribute("USER"));
-		JSONArray profileArray = new JSONArray();
-		JSONObject obj = new JSONObject();
-		
+
 		try {
-			obj.put("itemName", itemName);
-			obj.put("username", username);
-			obj.put("newBidValue", newBidValue);
-			profileArray.put(obj);
-			
-			Producer.sentToQueue(obj.toString());
+			HttpSession session = request.getSession(false);
+			if(session != null) {	
+				session.setAttribute("USER","");
+				session.invalidate();
+			}	
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("Bid.jsp");
-		rd.forward(request, response);
-	}
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("Bid.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 		rd.forward(request, response);
 	}
 
