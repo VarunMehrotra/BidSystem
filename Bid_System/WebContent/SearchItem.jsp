@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" session="false"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -34,9 +34,11 @@
 					placeholder="yyyy-mm-dd" required>
 				<div class="invalid-feedback">Please enter date.</div>
 			</div>
-
+			<br />
+			
 			<div class="col-md-2 mb-2">
-				<button class="btn btn-primary btn-lg" type="submit"
+			<br />
+				<button type="submit"
 					onclick="myFunction()">Submit</button>
 			</div>
 		</div>
@@ -66,6 +68,16 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="html-table-search.js"></script>
 	<script type="text/javascript">
+	<%
+	HttpSession session = request.getSession(false);
+	String sessionStr = (String) session.getAttribute("USER");
+	response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+	
+	if (sessionStr == null || sessionStr.equals("")) 
+	{	
+		%><jsp:forward page="login.jsp" /><%
+	}
+%>
       $(document).ready(function(){
         $('table.search-table').tableSearch({
           searchText:'Search',

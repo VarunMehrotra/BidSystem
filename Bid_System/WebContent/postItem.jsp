@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" session="false"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -84,6 +84,16 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
 		type="text/javascript"></script>
 	<script>
+	<%
+	HttpSession session = request.getSession(false);
+	String sessionStr = (String) session.getAttribute("USER");
+	response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+	
+	if (sessionStr == null || sessionStr.equals("")) 
+	{	
+		%><jsp:forward page="login.jsp" /><%
+	}
+%>
 		$(document).ready(function() {
 			$("#available-date").datepicker({
 			    onSelect: function(date) {

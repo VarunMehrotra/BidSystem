@@ -57,7 +57,7 @@ public class RegisterService {
 		else {
 			try {
 				Client client = Client.create();
-				WebResource webResource = client.resource("http://localhost:8082/Bid_Microservice/checkUser/register");
+				WebResource webResource = client.resource("https://localhost:8445/Bid_Microservice/checkUser/register");
 				String pass = formParam.getFirst("password");
 				String name = formParam.getFirst("name");
 				String address = formParam.getFirst("address");

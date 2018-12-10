@@ -25,8 +25,6 @@
 			</a></li>
 			<li class="nav-item"><a class="nav-link" href="register.jsp">Register</a>
 			</li>
-			<li class="nav-item"><a class="nav-link" href="contact-us.html">Contact
-					Us</a></li>
 		</ul>
 	</div>
 	</nav> </header>

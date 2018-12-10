@@ -29,8 +29,14 @@ import javax.servlet.http.*;
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.activation.*;
-
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.ws.rs.core.MultivaluedMap;
+
 
 /**
  * Servlet implementation class LoginServlet
@@ -59,16 +65,20 @@ public class SendEmailServlet extends HttpServlet {
 		Properties properties = System.getProperties();
 		properties.setProperty("mail.smtp.host", host);
 		properties.put("mail.smtp.port", "25");
-		Session s = Session.getDefaultInstance(properties);
+		Session s = Session.getDefaultInstance(properties, null);
 		response.setContentType("text/html");
 	     PrintWriter out = response.getWriter();
 	      
 		try {
 			MimeMessage message = new MimeMessage(s);
+			message.addHeader("Content-type", "text/HTML; charset=UTF-8");
+			message.addHeader("format", "flowed");
+			message.addHeader("Content-Transfer-Encoding", "8bit");
+		      
 			message.setFrom(new InternetAddress(from));
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-			message.setSubject("Reset Password -- Bid System Application");
-			message.setText("Please use the link to reset password :- http://localhost:8080/Bid_System/resetPassword.jsp");
+			message.setRecipients(Message.RecipientType.TO, to);
+			message.setSubject("Reset Password -- Bid System Application", "UTF-8");
+			message.setText("Please use the link to reset password :- https://localhost:8443/Bid_System/reset.jsp", "UTF-8");
 			
 			Transport.send(message);
 	         String title = "Reset Password";
@@ -88,7 +98,7 @@ public class SendEmailServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("forgotPassword.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 		rd.forward(request, response);
 	}
 

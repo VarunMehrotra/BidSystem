@@ -1,6 +1,8 @@
 package com.bid.controller;
 
 import com.bid.bean.*;
+import com.bid.memcache.MemCache;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -23,14 +25,14 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LoginServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public LoginServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -38,45 +40,69 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out=response.getWriter();
-		
+
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String isAdmin = request.getParameter("adminUse");
 
 		Boolean status = false;
+		boolean flag = false;
+
 		try {
-			 
+
 			Client client = Client.create();
 			WebResource webResource = client.resource("https://localhost:8444/Bid_WebService/loginservices/checkuservalidity");
 			MultivaluedMap formData = new MultivaluedMapImpl();
 			formData.add("username", username);
 			formData.add("password", password);
-			
+
 			if(isAdmin == null || isAdmin.equals("")) {
 				formData.add("isAdmin", "false");
+
+				String pass = MemCache.get(username);
+
+				if(pass != null && !pass.equals("")) {
+					if(pass.equals(password)) {
+						flag = true;
+					}
+					else {
+						RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+						rd.forward(request, response);
+						return;
+					}
+				}
 			}
 			else {
 				formData.add("isAdmin", "true");
 			}
-			
-			ClientResponse restResponse = webResource
-			    .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
-			    .post(ClientResponse.class, formData);
-			
-			if (restResponse.getStatus() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : " + restResponse.getStatus());
+
+			if(!flag) {
+				ClientResponse restResponse = webResource
+						.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+						.post(ClientResponse.class, formData);
+
+				if (restResponse.getStatus() != 200) {
+					throw new RuntimeException("Failed : HTTP error code : " + restResponse.getStatus());
+				}
+
+				String statusString = restResponse.getEntity(String.class);
+				status = Boolean.parseBoolean(statusString);
 			}
- 
-			String statusString = restResponse.getEntity(String.class);
-			status = Boolean.parseBoolean(statusString);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		if(status){
+
+		if(status || flag){
 			if(isAdmin == null || isAdmin.equals("")) {
+
 				HttpSession session = request.getSession();
 				session.setAttribute("USER", username);
+				
+				if(status) {
+					MemCache.put(username, password);
+				}
+
 				RequestDispatcher rd = request.getRequestDispatcher("welcome-page.jsp");
 				rd.forward(request, response);
 			}

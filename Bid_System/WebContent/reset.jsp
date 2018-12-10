@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Admin Access</title>
+<title>New Password</title>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css">
 <link rel="stylesheet"
@@ -25,6 +25,8 @@
 			</a></li>
 			<li class="nav-item"><a class="nav-link" href="register.jsp">Register</a>
 			</li>
+			<li class="nav-item"><a class="nav-link" href="contact-us.html">Contact
+					Us</a></li>
 		</ul>
 	</div>
 	</nav> </header>
@@ -33,29 +35,30 @@
 	<br />
 	<br />
 	<div class="col-md-8 order-md-1">
-		<h3 align="center">Admin Functionality</h3>
-		<form name="adminForm" method="post" action="AdminServlet">
+		<h3 align="center">New Password</h3>
+		<br />
+		<br />
+		<h5>Please enter details below :-</h5>
+		<br />
+		<form method="post" action="StorePasswordServlet">
+
+			<div class="mb-3">
+				<label for="user_name">Username</label> <input type="text"
+					class="form-control" name="user_name" id="user_name" />
+			</div>
+
+			<div class="mb-3">
+				<label for="user_pass">Password</label> <input type="password"
+					class="form-control" name="user_pass" id="user_pass" />
+			</div>
+
+			<div class="mb-3">
+				<label for="repeat_pass">Repeat Password</label> <input type="password"
+					class="form-control" name="repeat_pass" id="repeat_pass" />
+			</div>
 
 			<br />
 			<br />
-			<h5>Please select the date and time below :-</h5>
-			<br />
-				<div class="col-md-3 mb-3">
-					<label for="available-date">Date</label> 
-					<input type="text"
-						class="form-control" name="available-date" id="available-date"
-						placeholder="2018-09-04" required>
-					<div class="invalid-feedback">Please enter date.</div>
-				</div>
-				<div class="col-md-3 mb-3">
-					<label for="start-time">Start Time</label>
-					<input type="text" class="form-control" id="start-time" name="start-time" placeholder="08:00:00" required>
-				</div>
-				<div class="col-md-3 mb-3">
-					<label for="end-time">End Time</label>
-					<input type="text" class="form-control" id="end-time" name="end-time" placeholder="18:00:00" required>
-				</div>
-
 			<hr class="mb-4">
 			<br />
 			<button class="btn btn-primary btn-lg" type="reset">Reset</button>

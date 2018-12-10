@@ -31,7 +31,8 @@ public class FetchItemMicro {
 		Date date = new Date();
 		
 		try {
-			ResultSet rs = DBQuery.getResult("select itemTitle, itemDesc, auctionDate, auctionTime, biddingPrice from item where username='" + username + "' and marker = '0' and auctionDate >= '" + dateFormat.format(date) + "'");
+			//ResultSet rs = DBQuery.getResult("select itemTitle, itemDesc, auctionDate, auctionTime, biddingPrice from item where username='" + username + "' and marker = '0' and auctionDate > '" + dateFormat.format(date) + "'");
+			ResultSet rs = DBQuery.getResult("select itemTitle, itemDesc, auctionDate, auctionTime, biddingPrice from item where username='" + username + "' and marker = '0'");
 			
 			while(rs.next()) {	
 				JSONObject obj = new JSONObject();

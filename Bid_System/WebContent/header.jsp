@@ -31,6 +31,8 @@
 					Item</a></li>
 			<li class="nav-item"><a class="nav-link" href="MyItems.jsp">My
 					Item</a></li>
+			<li class="nav-item"><a class="nav-link" href="BidResult.jsp">Bid
+					Summary</a></li>
 		</ul>
 		<a href='InvalidateSessionServlet'>Logout</a>
 	</div>

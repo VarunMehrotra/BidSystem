@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" session="false"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -98,12 +98,23 @@
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
+	<%
+	HttpSession session = request.getSession(false);
+	String sessionStr = (String) session.getAttribute("USER");
+	response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+	
+	if (sessionStr == null || sessionStr.equals("")) 
+	{	
+		%><jsp:forward page="login.jsp" /><%
+	}
+%>
+
 		setInterval(
 				function() {
 					var minutes = (new Date()).getMinutes()
-					if (minutes % 15 == 0) {
+					//if (minutes % 15 == 0) {
 						window.location.href = "https://localhost:8443/Bid_System/Bid.jsp";
-					}
+					//}
 				}, 60000);
 		var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function() {
@@ -138,7 +149,7 @@
 				if (xhr_bid.readyState == 4) {
 					var data = xhr_bid.responseText;
 					var jsonArray = JSON.parse(data);
-					var str = bid_body.innerHTML;
+					var str = "";
 
 					for (var i = 0; i < jsonArray.length; i++) {
 						var jsonObject = JSON.parse(jsonArray[i]);

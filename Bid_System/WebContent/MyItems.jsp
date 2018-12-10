@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" session="false"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,8 +12,6 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/jquery.session@1.0.0/jquery.session.min.js"</script>
 <script>
 	function callServlet() {
 		var itemTitle = $('tr').find('input[type=radio]:checked').closest('tr')
@@ -71,14 +69,35 @@
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
+	<%
+	HttpSession session = request.getSession(false);
+	String sessionStr = (String) session.getAttribute("USER");
+	response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+	
+	if (sessionStr == null || sessionStr.equals("")) 
+	{	
+		%><jsp:forward page="login.jsp" /><%
+	}
+%>
+
 		var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4) {
 				var jsonArray = JSON.parse(this.responseText);
 				var str = "";
 				
-				/* var date = new Date();
-				var d = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate(); */
+				var date = new Date();
+				var year = (date.getFullYear()).toString();
+				var month = (date.getMonth()+1).toString();
+				var day = (date.getDate()).toString();
+				
+				if(month.length == 1){
+					month = "0" + month;
+				}
+				if(day.length == 1){
+					day = "0" + day;
+				}
+				var d = year + "-" + month + "-" + day;
 				
 				for (var i = 0; i < jsonArray.length; i++) {
 					var jsonObject = JSON.parse(jsonArray[i]);
@@ -89,9 +108,11 @@
 							+ jsonObject.auctionTime + "</td> <td>"
 							+ jsonObject.biddingPrice + "</td>";
 					
-					
-					str = str
-							+ "<td><input type='radio' name='deleteItem' value='true'> </td>";
+							//document.write(d + " " + (jsonObject.auctionDate).toString());
+					if(d < (jsonObject.auctionDate).toString()){
+						str = str
+						+ "<td><input type='radio' name='deleteItem' value='true'> </td>";	
+					}
 					str = str + "</tr>";
 				}
 				table_body.innerHTML = str;
